@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 
 import static cue.edu.co.jpa.constants.AcademicAreaColumn.CREATED_AT;
 import static cue.edu.co.jpa.constants.TableConstant.ACADEMIC_AREA_TABLE;
-import static cue.edu.co.model.academicarea.constants.AcademicAreaConstant.MAX_NAME_LENGTH;
-import static cue.edu.co.model.academicarea.constants.AcademicAreaConstant.MAX_DESCRIPTION_LENGTH;
+import static cue.edu.co.model.academicarea.constants.AcademicAreaConstant.NAME_MAX_SIZE;
+import static cue.edu.co.model.academicarea.constants.AcademicAreaConstant.DESCRIPTION_MAX_SIZE;
 
 @Data
 @Entity
@@ -24,10 +24,10 @@ public class AcademicAreaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = MAX_NAME_LENGTH, unique = true)
+    @Column(nullable = false, length = NAME_MAX_SIZE, unique = true)
     private String name;
 
-    @Column(length = MAX_DESCRIPTION_LENGTH)
+    @Column(length = DESCRIPTION_MAX_SIZE)
     private String description;
 
     @Column(name = CREATED_AT, nullable = false, updatable = false)
