@@ -1,11 +1,16 @@
 package cue.edu.co.model.academicarea;
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
 @Data
-@Builder(toBuilder = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AcademicArea {
     private Long id;
     private String name;
