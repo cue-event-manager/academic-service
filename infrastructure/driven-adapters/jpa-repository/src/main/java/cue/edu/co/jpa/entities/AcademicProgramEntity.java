@@ -25,7 +25,7 @@ public class AcademicProgramEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = MAX_NAME_LENGTH, unique = true)
+    @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;
 
     @Column(length = MAX_DESCRIPTION_LENGTH)
