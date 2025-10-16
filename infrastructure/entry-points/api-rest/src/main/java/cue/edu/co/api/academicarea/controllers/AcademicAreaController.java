@@ -22,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class AcademicAreaController {
@@ -49,6 +51,18 @@ public class AcademicAreaController {
         PageResult<AcademicArea> pageResult = getAllAcademicAreasUseCase.execute(query);
         PaginationResponseDto<AcademicAreaResponseDto> response = academicAreaDtoMapper.toDto(pageResult);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(AcademicAreaEndpoint.ACADEMIC_AREA_GET_ALL)
+    public ResponseEntity<List<AcademicAreaResponseDto>> getAll(
+    ) {
+        List<AcademicAreaResponseDto> academicAreas = getAllAcademicAreasUseCase
+                .execute()
+                .stream()
+                .map(academicAreaDtoMapper::toDto)
+                .toList();
+
+        return ResponseEntity.ok(academicAreas);
     }
 
     @GetMapping(AcademicAreaEndpoint.ACADEMIC_AREA_BY_ID)
