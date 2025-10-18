@@ -22,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(FacultyEndpoint.BASE_URL)
@@ -50,6 +52,16 @@ public class FacultyController {
         PageResult<Faculty> pageResult = getAllFacultiesUseCase.execute(query);
         PaginationResponseDto<FacultyResponseDto> response = facultyDtoMapper.toDto(pageResult);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(FacultyEndpoint.GET_ALL)
+    public ResponseEntity<List<FacultyResponseDto>> getAllForSelect() {
+        List<FacultyResponseDto> faculties = getAllFacultiesUseCase
+                .execute()
+                .stream()
+                .map(facultyDtoMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(faculties);
     }
 
     @GetMapping(FacultyEndpoint.GET_BY_ID)
