@@ -3,7 +3,7 @@ package cue.edu.co.model.faculty.exceptions;
 import cue.edu.co.model.common.NotFoundException;
 
 public class FacultyNotFoundException extends NotFoundException {
-    private static final String MESSAGE = "Faculty not found";
+    private static final String MESSAGE = "Faculty not found or inactive";
 
     public FacultyNotFoundException() {
         super(MESSAGE);

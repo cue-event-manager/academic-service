@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -35,6 +36,14 @@ public class FacultyRepositoryAdapter implements FacultyRepository {
     public Optional<Faculty> findById(Long id) {
         return facultyJpaRepository.findById(id)
                 .map(facultyMapper::toDomain);
+    }
+
+    @Override
+    public List<Faculty> findAll() {
+        return facultyJpaRepository.findAll()
+                .stream()
+                .map(facultyMapper::toDomain)
+                .toList();
     }
 
     @Override
