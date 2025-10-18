@@ -1,8 +1,8 @@
 package cue.edu.co.usecase.faculty;
 
-import cue.edu.co.model.common.BusinessException;
 import cue.edu.co.model.faculty.Faculty;
 import cue.edu.co.model.faculty.commands.DeleteFacultyCommand;
+import cue.edu.co.model.faculty.exceptions.FacultyHasAssociatedProgramsException;
 import cue.edu.co.model.faculty.exceptions.FacultyNotFoundException;
 import cue.edu.co.model.faculty.gateways.FacultyRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,13 +77,10 @@ class DeleteFacultyUseCaseTest {
         when(facultyRepository.hasActiveAcademicPrograms(1L)).thenReturn(true);
 
         // Act & Assert
-        BusinessException exception = assertThrows(
-                BusinessException.class,
+        assertThrows(
+                FacultyHasAssociatedProgramsException.class,
                 () -> deleteFacultyUseCase.execute(command)
         );
-
-        assertTrue(exception.getMessage().contains("Cannot delete faculty with active academic programs"));
-        assertEquals("FACULTY_HAS_ACTIVE_PROGRAMS", exception.getCode());
 
         verify(facultyRepository, times(1)).findById(1L);
         verify(facultyRepository, times(1)).hasActiveAcademicPrograms(1L);
