@@ -26,7 +26,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(FacultyEndpoint.BASE_URL)
 public class FacultyController {
     private final CreateFacultyUseCase createFacultyUseCase;
     private final UpdateFacultyUseCase updateFacultyUseCase;
@@ -35,7 +34,7 @@ public class FacultyController {
     private final GetAllFacultiesUseCase getAllFacultiesUseCase;
     private final FacultyDtoMapper facultyDtoMapper;
 
-    @PostMapping
+    @PostMapping(FacultyEndpoint.CREATE)
     public ResponseEntity<FacultyResponseDto> create(@Valid @RequestBody CreateFacultyRequestDto request) {
         CreateFacultyCommand command = facultyDtoMapper.toCommand(request);
         Faculty faculty = createFacultyUseCase.execute(command);
@@ -43,7 +42,7 @@ public class FacultyController {
                 .body(facultyDtoMapper.toDto(faculty));
     }
 
-    @GetMapping
+    @GetMapping(FacultyEndpoint.BASE_URL)
     public ResponseEntity<PaginationResponseDto<FacultyResponseDto>> getAll(
             @Valid FacultyPaginationRequestDto requestDto,
             @Valid PaginationRequestDto paginationRequestDto
@@ -73,7 +72,7 @@ public class FacultyController {
 
     @PutMapping(FacultyEndpoint.UPDATE)
     public ResponseEntity<FacultyResponseDto> update(
-            @PathVariable Long id,
+            @PathVariable(name = "id") Long id,
             @Valid @RequestBody UpdateFacultyRequestDto request) {
         UpdateFacultyCommand command = facultyDtoMapper.toCommand(id, request);
         Faculty faculty = updateFacultyUseCase.execute(command);
@@ -81,7 +80,7 @@ public class FacultyController {
     }
 
     @DeleteMapping(FacultyEndpoint.DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
         DeleteFacultyCommand command = new DeleteFacultyCommand(id);
         deleteFacultyUseCase.execute(command);
         return ResponseEntity.noContent().build();
