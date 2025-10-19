@@ -72,7 +72,7 @@ public class FacultyController {
 
     @PutMapping(FacultyEndpoint.UPDATE)
     public ResponseEntity<FacultyResponseDto> update(
-            @PathVariable Long id,
+            @PathVariable(name = "id") Long id,
             @Valid @RequestBody UpdateFacultyRequestDto request) {
         UpdateFacultyCommand command = facultyDtoMapper.toCommand(id, request);
         Faculty faculty = updateFacultyUseCase.execute(command);
@@ -80,7 +80,7 @@ public class FacultyController {
     }
 
     @DeleteMapping(FacultyEndpoint.DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
         DeleteFacultyCommand command = new DeleteFacultyCommand(id);
         deleteFacultyUseCase.execute(command);
         return ResponseEntity.noContent().build();
