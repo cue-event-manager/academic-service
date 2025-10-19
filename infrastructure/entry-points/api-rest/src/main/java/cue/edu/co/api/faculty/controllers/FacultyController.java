@@ -26,7 +26,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(FacultyEndpoint.BASE_URL)
 public class FacultyController {
     private final CreateFacultyUseCase createFacultyUseCase;
     private final UpdateFacultyUseCase updateFacultyUseCase;
@@ -35,7 +34,7 @@ public class FacultyController {
     private final GetAllFacultiesUseCase getAllFacultiesUseCase;
     private final FacultyDtoMapper facultyDtoMapper;
 
-    @PostMapping
+    @PostMapping(FacultyEndpoint.CREATE)
     public ResponseEntity<FacultyResponseDto> create(@Valid @RequestBody CreateFacultyRequestDto request) {
         CreateFacultyCommand command = facultyDtoMapper.toCommand(request);
         Faculty faculty = createFacultyUseCase.execute(command);
@@ -43,7 +42,7 @@ public class FacultyController {
                 .body(facultyDtoMapper.toDto(faculty));
     }
 
-    @GetMapping
+    @GetMapping(FacultyEndpoint.BASE_URL)
     public ResponseEntity<PaginationResponseDto<FacultyResponseDto>> getAll(
             @Valid FacultyPaginationRequestDto requestDto,
             @Valid PaginationRequestDto paginationRequestDto
