@@ -1,47 +1,102 @@
-# Proyecto Base Implementando Clean Architecture
+# Academic Service
 
-## Antes de Iniciar
+## Overview
 
-Empezaremos por explicar los diferentes componentes del proyectos y partiremos de los componentes externos, continuando con los componentes core de negocio (dominio) y por último el inicio y configuración de la aplicación.
+The **Academic Service** is responsible for managing all academic-related data within the CUE Event Management System. It handles the administration of faculties, academic programs, and academic areas, forming the core foundation for associating events and resources with academic entities across the university.
 
-Lee el artículo [Clean Architecture — Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a)
+---
 
-# Arquitectura
+## Purpose
 
-![Clean Architecture](https://miro.medium.com/max/1400/1*ZdlHz8B0-qu9Y-QO3AXR_w.png)
+This service centralizes all academic domain operations to maintain data consistency and avoid duplication across other services. It provides APIs to manage:
 
-## Domain
+* Faculties (organizational units within the university).
+* Academic programs (e.g., undergraduate, graduate programs).
+* Academic areas (specialized domains or departments).
 
-Es el módulo más interno de la arquitectura, pertenece a la capa del dominio y encapsula la lógica y reglas del negocio mediante modelos y entidades del dominio.
+It ensures that other microservices, such as **Event Service** or **Space Service**, can reference validated and up-to-date academic data.
 
-## Usecases
+---
 
-Este módulo gradle perteneciente a la capa del dominio, implementa los casos de uso del sistema, define lógica de aplicación y reacciona a las invocaciones desde el módulo de entry points, orquestando los flujos hacia el módulo de entities.
+## Versions
 
-## Infrastructure
+| Component                                   | Version |
+| ------------------------------------------- | ------- |
+| **Java**                                    | 17      |
+| **Spring Boot**                             | 3.5.4   |
+| **Gradle**                                  | 8.14.3  |
+| **Bancolombia Clean Architecture Scaffold** | 3.26.1  |
 
-### Helpers
+---
 
-En el apartado de helpers tendremos utilidades generales para los Driven Adapters y Entry Points.
+## Architecture
 
-Estas utilidades no están arraigadas a objetos concretos, se realiza el uso de generics para modelar comportamientos
-genéricos de los diferentes objetos de persistencia que puedan existir, este tipo de implementaciones se realizan
-basadas en el patrón de diseño [Unit of Work y Repository](https://medium.com/@krzychukosobudzki/repository-design-pattern-bc490b256006)
+The Academic Service is built using the **Bancolombia Clean Architecture Scaffold**, ensuring modularity and clear separation between business logic and infrastructure.
 
-Estas clases no puede existir solas y debe heredarse su compartimiento en los **Driven Adapters**
+```
+academic-service/
+├── applications/             # Application entry points and configurations
+├── domain/                   # Core entities, value objects, and use cases
+├── infrastructure/            # Repositories, adapters, and integrations
+├── build.gradle               # Gradle configuration
+└── settings.gradle            # Project settings
+```
 
-### Driven Adapters
+### Layers
 
-Los driven adapter representan implementaciones externas a nuestro sistema, como lo son conexiones a servicios rest,
-soap, bases de datos, lectura de archivos planos, y en concreto cualquier origen y fuente de datos con la que debamos
-interactuar.
+* **Domain:** Defines entities like `Faculty`, `AcademicProgram`, and `AcademicArea`.
+* **Use Cases:** Implements creation, updating, and retrieval logic for academic entities.
+* **Infrastructure:** Contains JPA repositories, mappers, and controllers.
+* **Entry Points:** Exposes REST endpoints for CRUD operations.
 
-### Entry Points
+---
 
-Los entry points representan los puntos de entrada de la aplicación o el inicio de los flujos de negocio.
+## Environment Variables
 
-## Application
+Below are the required environment variables for the Academic Service:
 
-Este módulo es el más externo de la arquitectura, es el encargado de ensamblar los distintos módulos, resolver las dependencias y crear los beans de los casos de use (UseCases) de forma automática, inyectando en éstos instancias concretas de las dependencias declaradas. Además inicia la aplicación (es el único módulo del proyecto donde encontraremos la función “public static void main(String[] args)”.
+```bash
+# -----------------------------------
+# Server Configuration
+# -----------------------------------
+SERVER_PORT=8080
+SPRING_PROFILES_ACTIVE=dev
 
-**Los beans de los casos de uso se disponibilizan automaticamente gracias a un '@ComponentScan' ubicado en esta capa.**
+# -----------------------------------
+# Database Configuration
+# -----------------------------------
+DB_URL=jdbc:mysql://mysql-academic:3306/academic_service?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+DB_USERNAME=academic_user
+DB_PASSWORD=academic_password
+
+# -----------------------------------
+# Internal Communication
+# -----------------------------------
+INTERNAL_SECRET=your-internal-service-secret
+EUREKA_URL=http://discovery-service:8761/eureka/
+
+# -----------------------------------
+# Logging Configuration
+# -----------------------------------
+LOGGING_LEVEL_ROOT=INFO
+LOGGING_LEVEL_CO.EDU.CUE=DEBUG
+
+# -----------------------------------
+# CORS Configuration
+# -----------------------------------
+CORS_ALLOWED_ORIGINS=http://localhost:4200,http://localhost:3000
+```
+
+## Security
+
+* Uses **internal service communication validation** via `INTERNAL_SECRET`.
+* Integrated with **Auth Service** through the API Gateway for user-level authorization.
+* Enforces **role-based access** for academic entity management (admin and academic staff only).
+
+---
+
+## Related Services
+
+* **Event Service:** Links events to faculties or programs.
+
+Part of the **CUE Event Management System**, Universidad Alexander von Humboldt. Developed under the Nuclear Project framework for academic and research purposes.
