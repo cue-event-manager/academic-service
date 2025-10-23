@@ -38,6 +38,13 @@ public class AcademicProgramRepositoryAdapter implements AcademicProgramReposito
     }
 
     @Override
+    public Optional<AcademicProgram> findByName(String name) {
+        return academicProgramJpaRepository
+                .findByName(name)
+                .map(academicProgramMapper::toDomain);
+    }
+
+    @Override
     public boolean existsByNameAndFacultyId(String name, Long facultyId) {
         return academicProgramJpaRepository.exists((root, query, cb) ->
                 cb.and(

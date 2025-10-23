@@ -39,6 +39,13 @@ public class AcademicAreaRepositoryAdapter implements AcademicAreaRepository {
     }
 
     @Override
+    public Optional<AcademicArea> findByName(String name) {
+        return academicAreaJpaRepository
+                .findByName(name)
+                .map(academicAreaMapper::toDomain);
+    }
+
+    @Override
     public List<AcademicArea> findAll() {
         return academicAreaJpaRepository
                 .findAll()
