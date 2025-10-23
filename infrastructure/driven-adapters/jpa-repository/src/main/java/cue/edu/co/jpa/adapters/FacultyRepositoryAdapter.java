@@ -39,6 +39,13 @@ public class FacultyRepositoryAdapter implements FacultyRepository {
     }
 
     @Override
+    public Optional<Faculty> findByName(String name) {
+        return facultyJpaRepository
+                .findByName(name)
+                .map(facultyMapper::toDomain);
+    }
+
+    @Override
     public List<Faculty> findAll() {
         return facultyJpaRepository.findAll()
                 .stream()

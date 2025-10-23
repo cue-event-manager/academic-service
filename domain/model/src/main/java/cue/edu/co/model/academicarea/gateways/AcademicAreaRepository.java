@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface AcademicAreaRepository {
     AcademicArea save(AcademicArea academicArea);
     Optional<AcademicArea> findById(Long id);
+    Optional<AcademicArea> findByName(String name);
     List<AcademicArea> findAll();
     boolean existsByName(String name);
     boolean existsByNameAndIdNot(String name, Long id);
