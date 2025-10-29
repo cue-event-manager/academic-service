@@ -4,6 +4,7 @@ import cue.edu.co.model.academicprogram.AcademicProgram;
 import cue.edu.co.model.academicprogram.queries.AcademicProgramPaginationQuery;
 import cue.edu.co.model.common.results.PageResult;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AcademicProgramRepository {
@@ -14,4 +15,5 @@ public interface AcademicProgramRepository {
     boolean existsByNameAndFacultyIdAndIdNot(String name, Long facultyId, Long id);
     void deleteById(Long id);
     PageResult<AcademicProgram> findAllByFilters(AcademicProgramPaginationQuery query);
+    List<AcademicProgram> findAll();
 }

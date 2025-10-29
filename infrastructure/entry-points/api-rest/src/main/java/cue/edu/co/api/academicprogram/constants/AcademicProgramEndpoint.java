@@ -9,4 +9,5 @@ public class AcademicProgramEndpoint {
     public static final String ACADEMIC_PROGRAM_BY_ID = ACADEMIC_PROGRAM_BASE + "/{id}";
     public static final String ACADEMIC_PROGRAM_UPDATE_ENDPOINT = ACADEMIC_PROGRAM_BASE + "/{id}/update";
     public static final String ACADEMIC_PROGRAM_DELETE_ENDPOINT = ACADEMIC_PROGRAM_BASE + "/{id}/delete";
+    public static final String ACADEMIC_PROGRAM_DELETE_ENDPOINT = ACADEMIC_PROGRAM_BASE + "/{id}/delete";
 }

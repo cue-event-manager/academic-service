@@ -6,11 +6,18 @@ import cue.edu.co.model.academicprogram.queries.AcademicProgramPaginationQuery;
 import cue.edu.co.model.common.results.PageResult;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class GetAllAcademicProgramsUseCase {
     private final AcademicProgramRepository academicProgramRepository;
 
     public PageResult<AcademicProgram> execute(AcademicProgramPaginationQuery query) {
         return academicProgramRepository.findAllByFilters(query);
+    }
+
+    public List<AcademicProgram> execute(){
+        return academicProgramRepository.findAll();
+
     }
 }
