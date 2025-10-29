@@ -11,6 +11,7 @@ public interface AcademicProgramRepository {
     AcademicProgram save(AcademicProgram academicProgram);
     Optional<AcademicProgram> findById(Long id);
     Optional<AcademicProgram> findByName(String name);
+    boolean existsById(Long id);
     boolean existsByNameAndFacultyId(String name, Long facultyId);
     boolean existsByNameAndFacultyIdAndIdNot(String name, Long facultyId, Long id);
     void deleteById(Long id);

@@ -1,10 +1,7 @@
 package cue.edu.co.api.academicprogram.controllers;
 
 import cue.edu.co.api.academicprogram.constants.AcademicProgramEndpoint;
-import cue.edu.co.api.academicprogram.dtos.AcademicProgramPaginationRequestDto;
-import cue.edu.co.api.academicprogram.dtos.AcademicProgramResponseDto;
-import cue.edu.co.api.academicprogram.dtos.CreateAcademicProgramRequestDto;
-import cue.edu.co.api.academicprogram.dtos.UpdateAcademicProgramRequestDto;
+import cue.edu.co.api.academicprogram.dtos.*;
 import cue.edu.co.api.academicprogram.mappers.AcademicProgramDtoMapper;
 import cue.edu.co.api.common.dtos.PaginationRequestDto;
 import cue.edu.co.api.common.dtos.PaginationResponseDto;
@@ -32,6 +29,8 @@ public class AcademicProgramController {
     private final DeleteAcademicProgramUseCase deleteAcademicProgramUseCase;
     private final GetAcademicProgramUseCase getAcademicProgramUseCase;
     private final GetAllAcademicProgramsUseCase getAllAcademicProgramsUseCase;
+    private final ExistsAcademicProgramUseCase existsAcademicProgramUseCase;
+
     private final AcademicProgramDtoMapper academicProgramDtoMapper;
 
     @PostMapping(AcademicProgramEndpoint.ACADEMIC_PROGRAM_CREATE_ENDPOINT)
@@ -64,8 +63,17 @@ public class AcademicProgramController {
         return ResponseEntity.ok(academicPrograms);
     }
 
+    @GetMapping(AcademicProgramEndpoint.ACADEMIC_PROGRAM_EXISTS_ENDPOINT)
+    public ResponseEntity<ExistsAcademicProgramResponseDto> existsById(@PathVariable(name = "id") Long id){
+        Boolean exists = existsAcademicProgramUseCase.execute(id);
+
+        return ResponseEntity.ok(
+                new ExistsAcademicProgramResponseDto(exists)
+        );
+    }
+
     @GetMapping(AcademicProgramEndpoint.ACADEMIC_PROGRAM_BY_ID)
-    public ResponseEntity<AcademicProgramResponseDto> getById(@PathVariable Long id) {
+    public ResponseEntity<AcademicProgramResponseDto> getById(@PathVariable(name = "id") Long id) {
         GetAcademicProgramQuery query = new GetAcademicProgramQuery(id);
         AcademicProgram academicProgram = getAcademicProgramUseCase.execute(query);
         return ResponseEntity.ok(academicProgramDtoMapper.toDto(academicProgram));

@@ -46,6 +46,11 @@ public class AcademicProgramRepositoryAdapter implements AcademicProgramReposito
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return academicProgramJpaRepository.existsById(id);
+    }
+
+    @Override
     public boolean existsByNameAndFacultyId(String name, Long facultyId) {
         return academicProgramJpaRepository.exists((root, query, cb) ->
                 cb.and(
