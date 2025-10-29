@@ -32,4 +32,9 @@ public class AcademicAreaUseCaseConfig {
     public GetAllAcademicAreasUseCase getAllAcademicAreasUseCase(AcademicAreaRepository academicAreaRepository) {
         return new GetAllAcademicAreasUseCase(academicAreaRepository);
     }
+
+    @Bean
+    public ExistsAcademicAreaUseCase existsAcademicAreaUseCase(AcademicAreaRepository academicAreaRepository){
+        return new ExistsAcademicAreaUseCase(academicAreaRepository);
+    }
 }

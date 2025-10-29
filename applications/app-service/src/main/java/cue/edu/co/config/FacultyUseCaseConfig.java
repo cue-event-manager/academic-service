@@ -32,4 +32,9 @@ public class FacultyUseCaseConfig {
     public GetAllFacultiesUseCase getAllFacultiesUseCase(FacultyRepository facultyRepository) {
         return new GetAllFacultiesUseCase(facultyRepository);
     }
+
+    @Bean
+    public ExistsFacultyUseCase existsFacultyUseCase(FacultyRepository facultyRepository){
+        return new ExistsFacultyUseCase(facultyRepository);
+    }
 }

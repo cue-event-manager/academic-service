@@ -3,10 +3,7 @@ package cue.edu.co.api.faculty.controllers;
 import cue.edu.co.api.common.dtos.PaginationRequestDto;
 import cue.edu.co.api.common.dtos.PaginationResponseDto;
 import cue.edu.co.api.faculty.constants.FacultyEndpoint;
-import cue.edu.co.api.faculty.dtos.CreateFacultyRequestDto;
-import cue.edu.co.api.faculty.dtos.FacultyPaginationRequestDto;
-import cue.edu.co.api.faculty.dtos.FacultyResponseDto;
-import cue.edu.co.api.faculty.dtos.UpdateFacultyRequestDto;
+import cue.edu.co.api.faculty.dtos.*;
 import cue.edu.co.api.faculty.mappers.FacultyDtoMapper;
 import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.faculty.Faculty;
@@ -32,6 +29,8 @@ public class FacultyController {
     private final DeleteFacultyUseCase deleteFacultyUseCase;
     private final GetFacultyUseCase getFacultyUseCase;
     private final GetAllFacultiesUseCase getAllFacultiesUseCase;
+    private final ExistsFacultyUseCase existsFacultyUseCase;
+
     private final FacultyDtoMapper facultyDtoMapper;
 
     @PostMapping(FacultyEndpoint.CREATE)
@@ -63,8 +62,14 @@ public class FacultyController {
         return ResponseEntity.ok(faculties);
     }
 
+    @GetMapping(FacultyEndpoint.EXISTS_BY_ID)
+    public ResponseEntity<ExistsFacultyResponseDto> existsById(@PathVariable(name = "id") Long id){
+        Boolean exists = existsFacultyUseCase.execute(id);
+        return ResponseEntity.ok(new ExistsFacultyResponseDto(exists));
+    }
+
     @GetMapping(FacultyEndpoint.GET_BY_ID)
-    public ResponseEntity<FacultyResponseDto> getById(@PathVariable Long id) {
+    public ResponseEntity<FacultyResponseDto> getById(@PathVariable(name = "id") Long id) {
         GetFacultyQuery query = new GetFacultyQuery(id);
         Faculty faculty = getFacultyUseCase.execute(query);
         return ResponseEntity.ok(facultyDtoMapper.toDto(faculty));

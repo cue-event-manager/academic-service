@@ -1,10 +1,7 @@
 package cue.edu.co.api.academicarea.controllers;
 
 import cue.edu.co.api.academicarea.constants.AcademicAreaEndpoint;
-import cue.edu.co.api.academicarea.dtos.AcademicAreaPaginationRequestDto;
-import cue.edu.co.api.academicarea.dtos.AcademicAreaResponseDto;
-import cue.edu.co.api.academicarea.dtos.CreateAcademicAreaRequestDto;
-import cue.edu.co.api.academicarea.dtos.UpdateAcademicAreaRequestDto;
+import cue.edu.co.api.academicarea.dtos.*;
 import cue.edu.co.api.academicarea.mappers.AcademicAreaDtoMapper;
 import cue.edu.co.api.common.dtos.PaginationRequestDto;
 import cue.edu.co.api.common.dtos.PaginationResponseDto;
@@ -32,6 +29,8 @@ public class AcademicAreaController {
     private final DeleteAcademicAreaUseCase deleteAcademicAreaUseCase;
     private final GetAcademicAreaUseCase getAcademicAreaUseCase;
     private final GetAllAcademicAreasUseCase getAllAcademicAreasUseCase;
+    private final ExistsAcademicAreaUseCase existsAcademicAreaUseCase;
+
     private final AcademicAreaDtoMapper academicAreaDtoMapper;
 
     @PostMapping(AcademicAreaEndpoint.ACADEMIC_AREA_CREATE_ENDPOINT)
@@ -65,8 +64,17 @@ public class AcademicAreaController {
         return ResponseEntity.ok(academicAreas);
     }
 
+    @GetMapping(AcademicAreaEndpoint.ACADEMIC_AREA_EXISTS_ENDPOINT)
+    public ResponseEntity<ExistsAcademicAreaResponseDto> existsById(@PathVariable(name = "id") Long id ){
+        Boolean exists = existsAcademicAreaUseCase.execute(id);
+
+        return ResponseEntity.ok(
+                new ExistsAcademicAreaResponseDto(exists)
+        );
+    }
+
     @GetMapping(AcademicAreaEndpoint.ACADEMIC_AREA_BY_ID)
-    public ResponseEntity<AcademicAreaResponseDto> getById(@PathVariable Long id) {
+    public ResponseEntity<AcademicAreaResponseDto> getById(@PathVariable(name = "id") Long id) {
         GetAcademicAreaQuery query = new GetAcademicAreaQuery(id);
         AcademicArea academicArea = getAcademicAreaUseCase.execute(query);
         return ResponseEntity.ok(academicAreaDtoMapper.toDto(academicArea));

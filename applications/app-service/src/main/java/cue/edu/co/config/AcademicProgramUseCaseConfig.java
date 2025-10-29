@@ -37,4 +37,9 @@ public class AcademicProgramUseCaseConfig {
     public GetAllAcademicProgramsUseCase getAllAcademicProgramsUseCase(AcademicProgramRepository academicProgramRepository) {
         return new GetAllAcademicProgramsUseCase(academicProgramRepository);
     }
+
+    @Bean
+    public ExistsAcademicProgramUseCase existsAcademicProgramUseCase(AcademicProgramRepository academicProgramRepository){
+        return new ExistsAcademicProgramUseCase(academicProgramRepository);
+    }
 }

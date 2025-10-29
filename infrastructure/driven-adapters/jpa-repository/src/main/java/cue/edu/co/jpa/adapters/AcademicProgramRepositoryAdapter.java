@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -42,6 +43,11 @@ public class AcademicProgramRepositoryAdapter implements AcademicProgramReposito
         return academicProgramJpaRepository
                 .findByName(name)
                 .map(academicProgramMapper::toDomain);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return academicProgramJpaRepository.existsById(id);
     }
 
     @Override
@@ -76,5 +82,14 @@ public class AcademicProgramRepositoryAdapter implements AcademicProgramReposito
         Specification<AcademicProgramEntity> spec = AcademicProgramSpecificationBuilder.build(query);
         Page<AcademicProgramEntity> page = academicProgramJpaRepository.findAll(spec, pageable);
         return paginationMapper.toPageResult(page, academicProgramMapper::toDomain);
+    }
+
+    @Override
+    public List<AcademicProgram> findAll() {
+        return academicProgramJpaRepository
+                .findAll()
+                .stream()
+                .map(academicProgramMapper::toDomain)
+                .toList();
     }
 }

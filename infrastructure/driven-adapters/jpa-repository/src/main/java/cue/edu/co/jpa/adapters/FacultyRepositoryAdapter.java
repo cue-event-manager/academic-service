@@ -54,6 +54,11 @@ public class FacultyRepositoryAdapter implements FacultyRepository {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return facultyJpaRepository.existsById(id);
+    }
+
+    @Override
     public boolean existsByName(String name) {
         return facultyJpaRepository.existsByName(name);
     }
