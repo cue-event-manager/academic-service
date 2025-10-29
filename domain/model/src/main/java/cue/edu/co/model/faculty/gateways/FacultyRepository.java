@@ -12,6 +12,7 @@ public interface FacultyRepository {
     Optional<Faculty> findById(Long id);
     Optional<Faculty> findByName(String name);
     List<Faculty> findAll();
+    boolean existsById(Long id);
     boolean existsByName(String name);
     boolean existsByNameAndIdNot(String name, Long id);
     PageResult<Faculty> findAllByFilters(FacultyPaginationQuery query);

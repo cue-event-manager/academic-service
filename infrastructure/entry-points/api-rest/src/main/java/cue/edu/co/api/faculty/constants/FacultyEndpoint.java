@@ -9,4 +9,6 @@ public class FacultyEndpoint {
     public static final String CREATE = BASE_URL + "/create";
     public static final String UPDATE = BASE_URL + "/{id}/update";
     public static final String DELETE = BASE_URL + "/{id}/delete";
+    public static final String EXISTS_BY_ID = BASE_URL + "/{id}/exists";
+
 }
