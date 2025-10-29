@@ -55,6 +55,11 @@ public class AcademicAreaRepositoryAdapter implements AcademicAreaRepository {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return academicAreaJpaRepository.existsById(id);
+    }
+
+    @Override
     public boolean existsByName(String name) {
         return academicAreaJpaRepository.existsByName(name);
     }

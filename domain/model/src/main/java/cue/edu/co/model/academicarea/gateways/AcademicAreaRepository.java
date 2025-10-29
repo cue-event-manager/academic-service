@@ -12,6 +12,7 @@ public interface AcademicAreaRepository {
     Optional<AcademicArea> findById(Long id);
     Optional<AcademicArea> findByName(String name);
     List<AcademicArea> findAll();
+    boolean existsById(Long id);
     boolean existsByName(String name);
     boolean existsByNameAndIdNot(String name, Long id);
     void deleteById(Long id);

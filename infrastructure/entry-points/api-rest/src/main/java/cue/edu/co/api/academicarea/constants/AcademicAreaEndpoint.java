@@ -9,4 +9,6 @@ public class AcademicAreaEndpoint {
     public static final String ACADEMIC_AREA_BY_ID = ACADEMIC_AREA_BASE + "/{id}";
     public static final String ACADEMIC_AREA_UPDATE_ENDPOINT = ACADEMIC_AREA_BASE + "/{id}/update";
     public static final String ACADEMIC_AREA_DELETE_ENDPOINT = ACADEMIC_AREA_BASE + "/{id}/delete";
+    public static final String ACADEMIC_AREA_EXISTS_ENDPOINT = ACADEMIC_AREA_BASE + "/{id}/exists";
+
 }
