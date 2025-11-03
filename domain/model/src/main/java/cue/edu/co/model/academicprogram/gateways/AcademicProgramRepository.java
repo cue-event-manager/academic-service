@@ -2,6 +2,7 @@ package cue.edu.co.model.academicprogram.gateways;
 
 import cue.edu.co.model.academicprogram.AcademicProgram;
 import cue.edu.co.model.academicprogram.queries.AcademicProgramPaginationQuery;
+import cue.edu.co.model.academicprogram.queries.GetAllAcademicProgramsQuery;
 import cue.edu.co.model.common.results.PageResult;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface AcademicProgramRepository {
     boolean existsByNameAndFacultyIdAndIdNot(String name, Long facultyId, Long id);
     void deleteById(Long id);
     PageResult<AcademicProgram> findAllByFilters(AcademicProgramPaginationQuery query);
-    List<AcademicProgram> findAll();
+    List<AcademicProgram> findAll(GetAllAcademicProgramsQuery query);
 }

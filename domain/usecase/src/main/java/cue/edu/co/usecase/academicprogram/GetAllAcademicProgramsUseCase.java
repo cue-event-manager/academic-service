@@ -3,6 +3,7 @@ package cue.edu.co.usecase.academicprogram;
 import cue.edu.co.model.academicprogram.AcademicProgram;
 import cue.edu.co.model.academicprogram.gateways.AcademicProgramRepository;
 import cue.edu.co.model.academicprogram.queries.AcademicProgramPaginationQuery;
+import cue.edu.co.model.academicprogram.queries.GetAllAcademicProgramsQuery;
 import cue.edu.co.model.common.results.PageResult;
 import lombok.RequiredArgsConstructor;
 
@@ -16,8 +17,7 @@ public class GetAllAcademicProgramsUseCase {
         return academicProgramRepository.findAllByFilters(query);
     }
 
-    public List<AcademicProgram> execute(){
-        return academicProgramRepository.findAll();
-
+    public List<AcademicProgram> execute(GetAllAcademicProgramsQuery query){
+        return academicProgramRepository.findAll(query);
     }
 }

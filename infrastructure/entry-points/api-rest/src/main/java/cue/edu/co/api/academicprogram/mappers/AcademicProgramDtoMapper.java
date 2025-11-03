@@ -12,6 +12,7 @@ import cue.edu.co.model.academicprogram.AcademicProgram;
 import cue.edu.co.model.academicprogram.commands.CreateAcademicProgramCommand;
 import cue.edu.co.model.academicprogram.commands.UpdateAcademicProgramCommand;
 import cue.edu.co.model.academicprogram.queries.AcademicProgramPaginationQuery;
+import cue.edu.co.model.academicprogram.queries.GetAllAcademicProgramsQuery;
 import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.model.faculty.Faculty;
 import org.mapstruct.Mapper;
@@ -33,6 +34,8 @@ public interface AcademicProgramDtoMapper {
             PaginationRequestDto paginationRequestDto
     );
 
+    GetAllAcademicProgramsQuery toQuery(AcademicProgramPaginationRequestDto requestDto);
+
     PaginationResponseDto<AcademicProgramResponseDto> toDto(PageResult<AcademicProgram> academicProgram);
 
     default AcademicProgramResponseDto.FacultyResponseDto toFacultyDto(Faculty faculty) {
@@ -41,4 +44,5 @@ public interface AcademicProgramDtoMapper {
         }
         return new AcademicProgramResponseDto.FacultyResponseDto(faculty.getId(), faculty.getName());
     }
+
 }

@@ -5,9 +5,11 @@ import cue.edu.co.jpa.mappers.AcademicProgramMapper;
 import cue.edu.co.jpa.mappers.PaginationMapper;
 import cue.edu.co.jpa.repositories.AcademicProgramJpaRepository;
 import cue.edu.co.jpa.specifications.AcademicProgramSpecificationBuilder;
+import cue.edu.co.jpa.specifications.GetAllAcademicProgramsSpecificationBuilder;
 import cue.edu.co.model.academicprogram.AcademicProgram;
 import cue.edu.co.model.academicprogram.gateways.AcademicProgramRepository;
 import cue.edu.co.model.academicprogram.queries.AcademicProgramPaginationQuery;
+import cue.edu.co.model.academicprogram.queries.GetAllAcademicProgramsQuery;
 import cue.edu.co.model.common.results.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -85,9 +87,11 @@ public class AcademicProgramRepositoryAdapter implements AcademicProgramReposito
     }
 
     @Override
-    public List<AcademicProgram> findAll() {
+    public List<AcademicProgram> findAll(GetAllAcademicProgramsQuery query) {
+        Specification<AcademicProgramEntity> spec = GetAllAcademicProgramsSpecificationBuilder.build(query);
+
         return academicProgramJpaRepository
-                .findAll()
+                .findAll(spec)
                 .stream()
                 .map(academicProgramMapper::toDomain)
                 .toList();

@@ -6,11 +6,12 @@ import cue.edu.co.api.academicprogram.mappers.AcademicProgramDtoMapper;
 import cue.edu.co.api.common.dtos.PaginationRequestDto;
 import cue.edu.co.api.common.dtos.PaginationResponseDto;
 import cue.edu.co.model.academicprogram.AcademicProgram;
-import cue.edu.co.model.academicprogram.GetAcademicProgramQuery;
+import cue.edu.co.model.academicprogram.queries.GetAcademicProgramQuery;
 import cue.edu.co.model.academicprogram.commands.CreateAcademicProgramCommand;
 import cue.edu.co.model.academicprogram.commands.DeleteAcademicProgramCommand;
 import cue.edu.co.model.academicprogram.commands.UpdateAcademicProgramCommand;
 import cue.edu.co.model.academicprogram.queries.AcademicProgramPaginationQuery;
+import cue.edu.co.model.academicprogram.queries.GetAllAcademicProgramsQuery;
 import cue.edu.co.model.common.results.PageResult;
 import cue.edu.co.usecase.academicprogram.*;
 import jakarta.validation.Valid;
@@ -53,9 +54,12 @@ public class AcademicProgramController {
     }
 
     @GetMapping(AcademicProgramEndpoint.ACADEMIC_PROGRAM_GET_ALL)
-    public ResponseEntity<List<AcademicProgramResponseDto>> getAll() {
+    public ResponseEntity<List<AcademicProgramResponseDto>> getAll(
+            @Valid AcademicProgramPaginationRequestDto requestDto
+            ) {
+        GetAllAcademicProgramsQuery query = academicProgramDtoMapper.toQuery(requestDto);
         List<AcademicProgramResponseDto> academicPrograms = getAllAcademicProgramsUseCase
-                .execute()
+                .execute(query)
                 .stream()
                 .map(academicProgramDtoMapper::toDto)
                 .toList();

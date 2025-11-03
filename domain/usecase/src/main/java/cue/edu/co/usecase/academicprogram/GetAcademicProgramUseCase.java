@@ -1,7 +1,7 @@
 package cue.edu.co.usecase.academicprogram;
 
 import cue.edu.co.model.academicprogram.AcademicProgram;
-import cue.edu.co.model.academicprogram.GetAcademicProgramQuery;
+import cue.edu.co.model.academicprogram.queries.GetAcademicProgramQuery;
 import cue.edu.co.model.academicprogram.exceptions.AcademicProgramNotFoundException;
 import cue.edu.co.model.academicprogram.gateways.AcademicProgramRepository;
 import lombok.RequiredArgsConstructor;
